@@ -299,3 +299,56 @@ l/network address/port) is normally permitted.
 打开cmd,输入netstat -a -n -o,就会显示出使用端口的进程pid,然后在进程管理器中查看相应的进程,默认情况下windows的进程管理器是不显示pid的，你可以通过在[查看]->[选择列]中选种查看pid，然后进程查看器中就会显示pid了 目前发现有几个程序是有时会占用这个端口的:pplive,skype,或者在杀毒软件瑞星关闭了连接网络功能.
 
 解决方法见原文链接：https://www.chinastor.com/apache/0G3332952016.html?mobile_redirection=false
+
+
+---
+使用bat文件实现alist.exe开机自启动:
+
+在Alist目录新建一个txt文件，由于一开始已经做了添加环境变量这一步，所以直接打开编辑输入如下：
+
+alist.exe server
+保存后，文件后缀改为.bat
+
+
+
+
+
+
+接下来关键一步，拷贝文件粘贴到Windows启动文件夹
+
+1.按下windows+R 输入：shell:startup
+
+2.把*.bat拷贝到此文件夹
+
+OK。完成
+
+
+
+补充：cmd 命令一直开着，最小化也怕误删了，我可以把它隐藏吗？
+以下是bat脚本cmd命令执行后隐藏的方法：
+
+开头
+
+@echo off
+
+if "%1" == "h" goto begin
+
+mshta Vbscript:createobject("wscript.shell").run("%~nx0 h",0)(window.close)&&exit
+
+:begin
+
++你要输入的命令。
+
+
+
+例：
+
+@echo of
+
+if "%1" == "h" goto begin
+
+mshta Vbscript:createobject("wscript.shell").run("%~nx0 h",0)(window.close)&&exit
+
+:begin
+
+alist.exe server
